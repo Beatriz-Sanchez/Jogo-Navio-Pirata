@@ -1,3 +1,3 @@
-# PiratesInvasionStage-6
+# PiratesInvasion Stage 6
 
-adding sounds and score
+último update: sons e pontuação
