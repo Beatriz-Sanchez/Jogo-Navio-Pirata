@@ -4,17 +4,17 @@ const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
 
 var engine, world;
-var canvas;
-var backgroundImg, towerImg;
-var ground, tower;
+var tela;
+var fundoImg, torreImg;
+var solo, torre;
 
 function preload() {
-  backgroundImg = loadImage("./assets/background.gif");
-  towerImg = loadImage("./assets/tower.png");
+  fundoImg = loadImage("./assets/background.gif");
+  torreImg = loadImage("./assets/tower.png");
 }
 
 function setup() {
-  canvas = createCanvas(1200,600);
+  tela = createCanvas(1200,600);
   
   engine = Engine.create();
   world = engine.world;
@@ -22,23 +22,23 @@ function setup() {
   var options = {
     isStatic: true
   };
-  ground = Bodies.rectangle(0,height-1,width*2,1,options);
-  World.add(world,ground);
+  solo = Bodies.rectangle(0,height-1,width*2,1,options);
+  World.add(world,solo);
 
-  tower = Bodies.rectangle(160,350,160,310,options);
-  World.add(world,tower);
+  torre = Bodies.rectangle(160,350,160,310,options);
+  World.add(world,torre);
 }
 
 function draw() {
-  image(backgroundImg, 0, 0, 1200, 600);
+  image(fundoImg, 0, 0, 1200, 600);
 
   Engine.update(engine);
 
   rectMode(CENTER);
-  rect(ground.position.x,ground.position.y,width*2,1);
+  rect(solo.position.x,solo.position.y,width*2,1);
 
   push();
   imageMode(CENTER);
-  image(towerImg,tower.position.x,tower.position.y,160,310);
+  image(torreImg,torre.position.x,torre.position.y,160,310);
   pop();
 }
