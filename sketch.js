@@ -4,23 +4,23 @@ const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
 
 var engine, world;
-var canvas;
-var ground;
+var tela;
+var solo;
 
 function preload() {
  
 }
 
 function setup() {
-  canvas = createCanvas(1200,600);
+  tela = createCanvas(1200,600);
   
   engine = Engine.create();
   world = engine.world;
 
-  var ground_options = {
+  var solo_options = {
     isStatic: true
   };
-  ground = Bodies.rectangle(0,height-1,width*2,1,ground_options);
+  solo = Bodies.rectangle(0,height-1,width*2,1,solo_options);
   World.add(world,ground);
 }
 
