@@ -28,7 +28,4 @@ function draw() {
   background(189);
 
   Engine.update(engine);
-
-  rectMode(CENTER);
-  rect(ground.position.x,ground.position.y,width*2,1);
 }
