@@ -34,7 +34,6 @@ function draw() {
 
   Engine.update(engine);
 
-  rectMode(CENTER);
   rect(solo.position.x,solo.position.y,width*2,1);
 
   push();
