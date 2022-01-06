@@ -5,10 +5,12 @@ const Constraint = Matter.Constraint;
 
 var engine, world;
 var canvas;
-var ground;
+var backgroundImg, towerImg;
+var ground, tower;
 
 function preload() {
- 
+  backgroundImg = loadImage("./assets/background.gif");
+  towerImg = loadImage("./assets/tower.png");
 }
 
 function setup() {
@@ -17,15 +19,26 @@ function setup() {
   engine = Engine.create();
   world = engine.world;
 
-  var ground_options = {
+  var options = {
     isStatic: true
   };
-  ground = Bodies.rectangle(0,height-1,width*2,1,ground_options);
+  ground = Bodies.rectangle(0,height-1,width*2,1,options);
   World.add(world,ground);
+
+  tower = Bodies.rectangle(160,350,160,310,options);
+  World.add(world,tower);
 }
 
 function draw() {
-  background(189);
+  image(backgroundImg, 0, 0, 1200, 600);
 
   Engine.update(engine);
+
+  rectMode(CENTER);
+  rect(ground.position.x,ground.position.y,width*2,1);
+
+  push();
+  imageMode(CENTER);
+  image(towerImg,tower.position.x,tower.position.y,160,310);
+  pop();
 }
