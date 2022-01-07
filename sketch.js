@@ -6,7 +6,7 @@ const Constraint = Matter.Constraint;
 var engine, world;
 var canvas;
 var fundoImg, torreImg;
-var solo, torre, canhao;
+var solo, torre, canhao, bala;
 var angulo = 20;
 
 function preload() {
@@ -30,6 +30,7 @@ function setup() {
   World.add(world,torre);
 
   canhao = new Canhao(180,110,130,100,angulo);
+  bala = new Bala(canhao.x,canhao.y);
 }
 
 function draw() {
@@ -45,4 +46,5 @@ function draw() {
   pop();
 
   canhao.display();
+  bala.display();
 }
