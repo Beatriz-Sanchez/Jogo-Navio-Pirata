@@ -4,9 +4,10 @@ const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
 
 var engine, world;
-var tela;
+var canvas;
 var fundoImg, torreImg;
-var solo, torre;
+var solo, torre, canhao;
+var angulo = 20;
 
 function preload() {
   fundoImg = loadImage("./assets/background.gif");
@@ -14,7 +15,7 @@ function preload() {
 }
 
 function setup() {
-  tela = createCanvas(1200,600);
+  canvas = createCanvas(1200,600);
   
   engine = Engine.create();
   world = engine.world;
@@ -27,6 +28,8 @@ function setup() {
 
   torre = Bodies.rectangle(160,350,160,310,options);
   World.add(world,torre);
+
+  canhao = new Canhao(180,110,130,100,angulo);
 }
 
 function draw() {
@@ -40,4 +43,6 @@ function draw() {
   imageMode(CENTER);
   image(torreImg,torre.position.x,torre.position.y,160,310);
   pop();
+
+  canhao.display();
 }
