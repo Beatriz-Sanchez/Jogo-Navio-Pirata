@@ -21,7 +21,7 @@ function setup() {
     isStatic: true
   };
   solo = Bodies.rectangle(0,height-1,width*2,1,solo_options);
-  World.add(world,ground);
+  World.add(world,solo);
 }
 
 function draw() {
