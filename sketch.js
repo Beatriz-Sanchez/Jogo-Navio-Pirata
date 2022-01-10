@@ -31,6 +31,8 @@ function setup() {
 
   cannon = new Cannon(180,110,130,100,angle);
   ball = new CannonBall(cannon.x, cannon.y);
+
+  angleMode(DEGREES);
 }
 
 function draw() {
@@ -47,4 +49,9 @@ function draw() {
 
   cannon.display();
   ball.display();
+}
+function keyReleased(){
+  if (keyCode === DOWN_ARROW){
+    ball.shoot();
+  }
 }
