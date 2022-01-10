@@ -1,1 +1,3 @@
-# PiratesInvasion template
+# Invasão Pirata
+
+versão em português

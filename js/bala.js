@@ -15,4 +15,14 @@ class Bala {
     image(this.image,pos.x,pos.y,this.r,this.r);
     pop();
   }
+  atirar () { 
+    var novoAngulo = canhao.angulo*PI/180-0.5;
+    var velocidade = p5.Vector.fromAngle(novoAngulo);
+    velocidade.mult(0.4);
+    Matter.Body.setStatic(this.body,false);
+    Matter.Body.setVelocity(this.body,{
+      x: velocidade.x * 180/PI,
+      y: velocidade.y * 180/PI
+    });
+  }
 }

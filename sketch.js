@@ -31,6 +31,8 @@ function setup() {
 
   canhao = new Canhao(180,110,130,100,angulo);
   bala = new Bala(canhao.x,canhao.y);
+
+  angleMode(DEGREES);
 }
 
 function draw() {
@@ -47,4 +49,9 @@ function draw() {
 
   canhao.display();
   bala.display();
+}
+function keyReleased(){
+  if (keyCode === DOWN_ARROW){
+    bala.atirar();
+  }
 }

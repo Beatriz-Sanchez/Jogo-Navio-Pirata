@@ -9,10 +9,21 @@ class Canhao {
     this.canhao_base = loadImage("./assets/cannonBase.png");
   }
   display(){
+
+    if (keyIsDown(RIGHT_ARROW) && this.angulo < 70) {
+      this.angulo += 1;
+    }
+
+    if (keyIsDown(LEFT_ARROW) && this.angulo > -30) {
+      this.angulo -= 1;
+    }
+    
     //cano do canhão
     push();
+    translate(this.x,this.y);
+    rotate(this.angulo);
     imageMode(CENTER);
-    image(this.canhao_img,this.x, this.y, this.largura,this.altura);
+    image(this.canhao_img,0, 0, this.largura,this.altura);
     pop();
 
     //corpo do canhão
