@@ -3,7 +3,7 @@ class Bala {
     var options = {
       isStatic:true
     };
-    this.r = 30;
+    this.r = 15;
     this.body = Bodies.circle(x,y,this.r,options);
     World.add(world,this.body);
     this.image = loadImage("./assets/cannonball.png");
@@ -12,10 +12,10 @@ class Bala {
     var pos = this.body.position;
     push();
     imageMode(CENTER);
-    image(this.image,pos.x,pos.y,this.r,this.r);
+    image(this.image,pos.x,pos.y,this.r*2,this.r*2);
     pop();
   }
-  atirar () { 
+  atirar() { 
     var novoAngulo = canhao.angulo*PI/180-0.5;
     var velocidade = p5.Vector.fromAngle(novoAngulo);
     velocidade.mult(0.4);
