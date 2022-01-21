@@ -8,6 +8,7 @@ var canvas;
 var backgroundImg, towerImg;
 var ground, tower, cannon, ball;
 var angle = 20;
+var balls = [];
 
 function preload() {
   backgroundImg = loadImage("./assets/background.gif");
@@ -30,7 +31,6 @@ function setup() {
   World.add(world,tower);
 
   cannon = new Cannon(180,110,130,100,angle);
-  ball = new CannonBall(cannon.x, cannon.y);
 
   angleMode(DEGREES);
 }
@@ -47,11 +47,25 @@ function draw() {
   image(towerImg,tower.position.x,tower.position.y,160,310);
   pop();
 
+  for (var i = 0; i < balls.length; i++) {
+    showCannonBalls(balls[i]);
+  }
+
   cannon.display();
-  ball.display();
+}
+function keyPressed(){
+  if (keyCode === DOWN_ARROW){
+      var cannonBall = new CannonBall(cannon.x, cannon.y+4);
+      balls.push(cannonBall);
+  }
 }
 function keyReleased(){
   if (keyCode === DOWN_ARROW){
-    ball.shoot();
+    balls[balls.length - 1].shoot();
+  }
+}
+function showCannonBalls(ball){
+  if(ball){
+      ball.display();
   }
 }
