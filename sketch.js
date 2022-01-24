@@ -6,7 +6,7 @@ const Constraint = Matter.Constraint;
 var engine, world;
 var canvas;
 var fundoImg, torreImg;
-var solo, torre, canhao, bala;
+var solo, torre, canhao, bala, navio;
 //angulo inicial do canhão
 var angulo = 20;
 //matriz das balas
@@ -34,6 +34,8 @@ function setup() {
 
   canhao = new Canhao(180,110,130,100,angulo);
 
+  navio = new Navio(width-79, height-60,170,170,-80);
+
   angleMode(DEGREES);
 }
 
@@ -56,6 +58,10 @@ function draw() {
   }
 
   canhao.display();
+
+  Matter.Body.setVelocity(navio.body, {x: -0.9,y:0});
+
+  navio.display();
 }
 
 //se a tecla para baixo for apertada, uma bola é criada
