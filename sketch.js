@@ -11,6 +11,7 @@ var solo, torre, canhao, bala, navio;
 var angulo = 20;
 //matriz das balas
 var balas = [];
+var navios = [];
 
 function preload() {
   fundoImg = loadImage("./assets/background.gif");
@@ -33,8 +34,6 @@ function setup() {
   World.add(world,torre);
 
   canhao = new Canhao(180,110,130,100,angulo);
-
-  navio = new Navio(width-79, height-60,170,170,-80);
 
   angleMode(DEGREES);
 }
@@ -59,9 +58,7 @@ function draw() {
 
   canhao.display();
 
-  Matter.Body.setVelocity(navio.body, {x: -0.9,y:0});
-
-  navio.display();
+  mostrarNavios();
 }
 
 //se a tecla para baixo for apertada, uma bola é criada
@@ -83,5 +80,29 @@ function keyReleased(){
 function mostrarBala(bala){
   if(bala){
       bala.display();
+  }
+}
+
+function mostrarNavios(){
+  if (navios.length > 0){
+
+    if (navios[navios.length - 1] === undefined ||
+      navios[navios.length - 1].body.position.x < width - 300) {
+      var positions = [-40, -60, -70, -20];
+      var position = random(positions);
+      navio = new Navio(width, height - 100, 170, 170, position);
+  
+      navios.push(navio);
+    }
+    
+    for (var i = 0; i < navios.length; i++) {
+      if (navios[i]) {
+        Matter.Body.setVelocity(navios[i].body, {x: -0.9,y: 0});
+        navios[i].display();
+      }
+    }
+  } else {
+    navio = new Navio(width-79, height-60,170,170,-60);
+    navios.push(navio);
   }
 }
