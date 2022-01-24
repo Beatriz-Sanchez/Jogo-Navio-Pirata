@@ -6,7 +6,7 @@ const Constraint = Matter.Constraint;
 var engine, world;
 var canvas;
 var backgroundImg, towerImg;
-var ground, tower, cannon, ball;
+var ground, tower, cannon, ball, boat;
 var angle = 20;
 var balls = [];
 
@@ -32,6 +32,8 @@ function setup() {
 
   cannon = new Cannon(180,110,130,100,angle);
 
+  boat = new Boat(width-79, height-60,170,170,-80);
+
   angleMode(DEGREES);
 }
 
@@ -52,6 +54,9 @@ function draw() {
   }
 
   cannon.display();
+
+  Matter.Body.setVelocity(boat.body, {x:-0.9,y:0});
+  boat.display();
 }
 function keyPressed(){
   if (keyCode === DOWN_ARROW){
