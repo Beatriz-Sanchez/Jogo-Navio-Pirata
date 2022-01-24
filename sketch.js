@@ -9,6 +9,7 @@ var backgroundImg, towerImg;
 var ground, tower, cannon, ball, boat;
 var angle = 20;
 var balls = [];
+var boats = [];
 
 function preload() {
   backgroundImg = loadImage("./assets/background.gif");
@@ -32,8 +33,6 @@ function setup() {
 
   cannon = new Cannon(180,110,130,100,angle);
 
-  boat = new Boat(width-79, height-60,170,170,-80);
-
   angleMode(DEGREES);
 }
 
@@ -54,14 +53,13 @@ function draw() {
   }
 
   cannon.display();
+  showBoats();
 
-  Matter.Body.setVelocity(boat.body, {x:-0.9,y:0});
-  boat.display();
 }
 function keyPressed(){
   if (keyCode === DOWN_ARROW){
-      var cannonBall = new CannonBall(cannon.x, cannon.y+4);
-      balls.push(cannonBall);
+    var cannonBall = new CannonBall(cannon.x, cannon.y+4);
+    balls.push(cannonBall);
   }
 }
 function keyReleased(){
@@ -72,5 +70,28 @@ function keyReleased(){
 function showCannonBalls(ball){
   if(ball){
       ball.display();
+  }
+}
+function showBoats(){
+  if (boats.length > 0){
+
+    if (boats[boats.length - 1] === undefined ||
+      boats[boats.length - 1].body.position.x < width - 300) {
+      var positions = [-40, -60, -70, -20];
+      var position = random(positions);
+      boat = new Boat(width, height - 100, 170, 170, position);
+  
+      boats.push(boat);
+    }
+    
+    for (var i = 0; i < boats.length; i++) {
+      if (boats[i]) {
+        Matter.Body.setVelocity(boats[i].body, {x: -0.9,y: 0});
+        boats[i].display();
+      }
+    }
+  } else {
+    boat = new Boat(width-79, height-60,170,170,-60);
+    boats.push(boat);
   }
 }
