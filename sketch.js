@@ -50,6 +50,7 @@ function draw() {
 
   for (var i = 0; i < balls.length; i++) {
     showCannonBalls(balls[i]);
+    collisionWithBoat(i);//novo
   }
 
   cannon.display();
@@ -93,5 +94,18 @@ function showBoats(){
   } else {
     boat = new Boat(width-79, height-60,170,170,-60);
     boats.push(boat);
+  }
+}
+
+function collisionWithBoat(index) {
+  for (var i = 0; i < boats.length; i++) {
+    if (balls[index] !== undefined && boats[i] !== undefined) {
+      var collision = Matter.SAT.collides(balls[index].body, boats[i].body);
+
+      if (collision.collided) {
+        boats[i].remove(i);
+        balls[index].remove(index);
+      }
+    }
   }
 }
