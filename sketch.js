@@ -53,7 +53,8 @@ function draw() {
 
   //mostrando as balas de canhão
   for (var i = 0; i < balas.length; i++) {
-    mostrarBala(balas[i]);
+    mostrarBala(balas[i],i);
+    colisaoComNavios(i);
   }
 
   canhao.display();
@@ -77,9 +78,12 @@ function keyReleased(){
 }
 
 //função para mostrar cada bala
-function mostrarBala(bala){
+function mostrarBala(bala, indice){
   if(bala){
-      bala.display();
+    bala.display();
+    if (bala.body.position.x >= width || bala.body.position.y >= height - 50) {
+      bala.remover(indice);
+    }
   }
 }
 
@@ -104,5 +108,17 @@ function mostrarNavios(){
   } else {
     navio = new Navio(width-79, height-60,170,170,-60);
     navios.push(navio);
+  }
+}
+function colisaoComNavios(indice) {
+  for (var i = 0; i < navios.length; i++) {
+    if (balas[indice] !== undefined && navios[i] !== undefined) {
+      var colisao = Matter.SAT.collides(balas[indice].body, navios[i].body);
+
+      if (colisao.collided) {
+        navios[i].remover(i);
+        balas[indice].remover(indice);
+      }
+    }
   }
 }

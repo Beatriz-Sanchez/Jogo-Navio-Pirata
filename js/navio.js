@@ -19,4 +19,11 @@ class Navio{
     image(this.imagem,0,this.navioPos,this.largura,this.altura);
     pop();
   }
+
+  remover(indice){
+    setTimeout(() => {
+      Matter.World.remove(world, navios[indice].body);
+      delete navios[indice];
+  }, 2000);
+  }
 }

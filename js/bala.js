@@ -25,4 +25,12 @@ class Bala {
       y: velocidade.y * 180/PI
     });
   }
+
+  remover(indice){
+    Matter.Body.setVelocity(balas[indice].body, {x:0,y:0});
+    setTimeout(() => {
+      Matter.World.remove(world, balas[indice].body);
+      delete balas[indice];
+  }, 1000);
+  }
 }
