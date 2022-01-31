@@ -14,8 +14,6 @@ var balas = [];
 var navios = [];
 var dadosNavio, spritesheetNavio;
 var animacaoNavio = [];
-var dadosNavioQuebrado, spritesheetNavioQuebrado;
-var animacaoNavioQuebrado = [];
 var dadosRespingo, spritesheetRespingo;
 var animacaoRespingo = [];
 
@@ -24,8 +22,6 @@ function preload() {
   torreImg = loadImage("./assets/tower.png");
   dadosNavio = loadJSON("assets/boat/boat.json");
   spritesheetNavio = loadImage("assets/boat/boat.png");
-  dadosNavioQuebrado = loadJSON("assets/boat/broken_boat.json");
-  spritesheetNavioQuebrado = loadImage("assets/boat/broken_boat.png");
   dadosRespingo = loadJSON("assets/water_splash/water_splash.json");
   spritesheetRespingo = loadImage("assets/water_splash/water_splash.png");
 }
@@ -52,13 +48,6 @@ function setup() {
     var pos = quadrosNavio[i].position;
     var img = spritesheetNavio.get(pos.x, pos.y, pos.w, pos.h);
     animacaoNavio.push(img);
-  }
-
-  var quadrosNavioQuebrado = dadosNavioQuebrado.frames;
-  for (var i = 0; i < quadrosNavioQuebrado.length; i++) {
-    var pos = quadrosNavioQuebrado[i].position;
-    var img = spritesheetNavioQuebrado.get(pos.x, pos.y, pos.w, pos.h);
-    animacaoNavioQuebrado.push(img);
   }
 
   var waterSplashFrames = dadosRespingo.frames;
