@@ -10,10 +10,23 @@ var ground, tower, cannon, ball, boat;
 var angle = 20;
 var balls = [];
 var boats = [];
+var boatSpritedata, boatSpritesheet;
+var boatAnimation = [];
+var brokenBoatSpritedata, brokenBoatSpritesheet;
+var brokenBoatAnimation = [];
+var waterSplashSpritedata, waterSplashSpritesheet;
+var waterSplashAnimation = [];
+
 
 function preload() {
   backgroundImg = loadImage("./assets/background.gif");
   towerImg = loadImage("./assets/tower.png");
+  boatSpritedata = loadJSON("assets/boat/boat.json");
+  boatSpritesheet = loadImage("assets/boat/boat.png");
+  brokenBoatSpritedata = loadJSON("assets/boat/broken_boat.json");
+  brokenBoatSpritesheet = loadImage("assets/boat/broken_boat.png");
+  waterSplashSpritedata = loadJSON("assets/water_splash/water_splash.json");
+  waterSplashSpritesheet = loadImage("assets/water_splash/water_splash.png");
 }
 
 function setup() {
@@ -32,6 +45,27 @@ function setup() {
   World.add(world,tower);
 
   cannon = new Cannon(180,110,130,100,angle);
+
+  var boatFrames = boatSpritedata.frames;
+  for (var i = 0; i < boatFrames.length; i++) {
+    var pos = boatFrames[i].position;
+    var img = boatSpritesheet.get(pos.x, pos.y, pos.w, pos.h);
+    boatAnimation.push(img);
+  }
+
+  var brokenBoatFrames = brokenBoatSpritedata.frames;
+  for (var i = 0; i < brokenBoatFrames.length; i++) {
+    var pos = brokenBoatFrames[i].position;
+    var img = brokenBoatSpritesheet.get(pos.x, pos.y, pos.w, pos.h);
+    brokenBoatAnimation.push(img);
+  }
+
+  var waterSplashFrames = waterSplashSpritedata.frames;
+  for (var i = 0; i < waterSplashFrames.length; i++) {
+    var pos = waterSplashFrames[i].position;
+    var img = waterSplashSpritesheet.get(pos.x, pos.y, pos.w, pos.h);
+    waterSplashAnimation.push(img);
+  }
 
   angleMode(DEGREES);
 }
@@ -68,11 +102,12 @@ function keyReleased(){
     balls[balls.length - 1].shoot();
   }
 }
-function showCannonBalls(ball, index){
+function showCannonBalls(ball,index){
   if(ball){
-      ball.display();
+    ball.display();
+    ball.animate();
     if (ball.body.position.x >= width || ball.body.position.y >= height - 50) {
-        ball.remove(index);
+      ball.remove(index);
     }
   }
 }
@@ -83,7 +118,7 @@ function showBoats(){
       boats[boats.length - 1].body.position.x < width - 300) {
       var positions = [-40, -60, -70, -20];
       var position = random(positions);
-      boat = new Boat(width, height - 100, 170, 170, position);
+      boat = new Boat(width, height - 100, 170, 170, position,boatAnimation);
   
       boats.push(boat);
     }
@@ -92,10 +127,11 @@ function showBoats(){
       if (boats[i]) {
         Matter.Body.setVelocity(boats[i].body, {x: -0.9,y: 0});
         boats[i].display();
+        boats[i].animate();
       }
     }
   } else {
-    boat = new Boat(width-79, height-60,170,170,-60);
+    boat = new Boat(width-79, height-60,170,170,-60,boatAnimation);
     boats.push(boat);
   }
 }
@@ -107,7 +143,8 @@ function collisionWithBoat(index) {
 
       if (collision.collided) {
         boats[i].remove(i);
-        balls[index].remove(index);
+        Matter.World.remove(world, balls[index].body);
+        delete balls[index];
       }
     }
   }
