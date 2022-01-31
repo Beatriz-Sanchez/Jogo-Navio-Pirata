@@ -12,8 +12,6 @@ var balls = [];
 var boats = [];
 var boatSpritedata, boatSpritesheet;
 var boatAnimation = [];
-var brokenBoatSpritedata, brokenBoatSpritesheet;
-var brokenBoatAnimation = [];
 var waterSplashSpritedata, waterSplashSpritesheet;
 var waterSplashAnimation = [];
 
@@ -23,8 +21,6 @@ function preload() {
   towerImg = loadImage("./assets/tower.png");
   boatSpritedata = loadJSON("assets/boat/boat.json");
   boatSpritesheet = loadImage("assets/boat/boat.png");
-  brokenBoatSpritedata = loadJSON("assets/boat/broken_boat.json");
-  brokenBoatSpritesheet = loadImage("assets/boat/broken_boat.png");
   waterSplashSpritedata = loadJSON("assets/water_splash/water_splash.json");
   waterSplashSpritesheet = loadImage("assets/water_splash/water_splash.png");
 }
@@ -51,13 +47,6 @@ function setup() {
     var pos = boatFrames[i].position;
     var img = boatSpritesheet.get(pos.x, pos.y, pos.w, pos.h);
     boatAnimation.push(img);
-  }
-
-  var brokenBoatFrames = brokenBoatSpritedata.frames;
-  for (var i = 0; i < brokenBoatFrames.length; i++) {
-    var pos = brokenBoatFrames[i].position;
-    var img = brokenBoatSpritesheet.get(pos.x, pos.y, pos.w, pos.h);
-    brokenBoatAnimation.push(img);
   }
 
   var waterSplashFrames = waterSplashSpritedata.frames;
