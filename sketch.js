@@ -12,10 +12,22 @@ var angulo = 20;
 //matriz das balas
 var balas = [];
 var navios = [];
+var dadosNavio, spritesheetNavio;
+var animacaoNavio = [];
+var dadosNavioQuebrado, spritesheetNavioQuebrado;
+var animacaoNavioQuebrado = [];
+var dadosRespingo, spritesheetRespingo;
+var animacaoRespingo = [];
 
 function preload() {
   fundoImg = loadImage("./assets/background.gif");
   torreImg = loadImage("./assets/tower.png");
+  dadosNavio = loadJSON("assets/boat/boat.json");
+  spritesheetNavio = loadImage("assets/boat/boat.png");
+  dadosNavioQuebrado = loadJSON("assets/boat/broken_boat.json");
+  spritesheetNavioQuebrado = loadImage("assets/boat/broken_boat.png");
+  dadosRespingo = loadJSON("assets/water_splash/water_splash.json");
+  spritesheetRespingo = loadImage("assets/water_splash/water_splash.png");
 }
 
 function setup() {
@@ -34,6 +46,27 @@ function setup() {
   World.add(world,torre);
 
   canhao = new Canhao(180,110,130,100,angulo);
+
+  var quadrosNavio = dadosNavio.frames;
+  for (var i = 0; i < quadrosNavio.length; i++) {
+    var pos = quadrosNavio[i].position;
+    var img = spritesheetNavio.get(pos.x, pos.y, pos.w, pos.h);
+    animacaoNavio.push(img);
+  }
+
+  var quadrosNavioQuebrado = dadosNavioQuebrado.frames;
+  for (var i = 0; i < quadrosNavioQuebrado.length; i++) {
+    var pos = quadrosNavioQuebrado[i].position;
+    var img = spritesheetNavioQuebrado.get(pos.x, pos.y, pos.w, pos.h);
+    animacaoNavioQuebrado.push(img);
+  }
+
+  var waterSplashFrames = dadosRespingo.frames;
+  for (var i = 0; i < waterSplashFrames.length; i++) {
+    var pos = waterSplashFrames[i].position;
+    var img = spritesheetRespingo.get(pos.x, pos.y, pos.w, pos.h);
+    animacaoRespingo.push(img);
+  }
 
   angleMode(DEGREES);
 }
@@ -81,6 +114,7 @@ function keyReleased(){
 function mostrarBala(bala, indice){
   if(bala){
     bala.display();
+    bala.animar();
     if (bala.body.position.x >= width || bala.body.position.y >= height - 50) {
       bala.remover(indice);
     }
@@ -94,7 +128,7 @@ function mostrarNavios(){
       navios[navios.length - 1].body.position.x < width - 300) {
       var positions = [-40, -60, -70, -20];
       var position = random(positions);
-      navio = new Navio(width, height - 100, 170, 170, position);
+      navio = new Navio(width, height - 100, 170, 170, position,animacaoNavio);
   
       navios.push(navio);
     }
@@ -103,10 +137,11 @@ function mostrarNavios(){
       if (navios[i]) {
         Matter.Body.setVelocity(navios[i].body, {x: -0.9,y: 0});
         navios[i].display();
+        navios[i].animar();
       }
     }
   } else {
-    navio = new Navio(width-79, height-60,170,170,-60);
+    navio = new Navio(width-79, height-60,170,170,-60,animacaoNavio);
     navios.push(navio);
   }
 }
@@ -117,7 +152,8 @@ function colisaoComNavios(indice) {
 
       if (colisao.collided) {
         navios[i].remover(i);
-        balas[indice].remover(indice);
+        Matter.World.remove(world, balas[indice].body);
+        delete balas[indice];
       }
     }
   }

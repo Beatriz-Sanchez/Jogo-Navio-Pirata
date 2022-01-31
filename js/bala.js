@@ -7,14 +7,23 @@ class Bala {
     this.body = Bodies.circle(x,y,this.r,options);
     World.add(world,this.body);
     this.imagem = loadImage("./assets/cannonball.png");
+    this.velocidade = 0.05;
+    this.animacao = [this.imagem];
   }
+
+  animar() {
+    this.velocidade += 0.05;
+  }
+
   display(){
     var pos = this.body.position;
+    var indice = floor(this.velocidade % this.animacao.length);
     push();
     imageMode(CENTER);
-    image(this.imagem,pos.x,pos.y,this.r*2,this.r*2);
+    image(this.animacao[indice],pos.x,pos.y,this.r*2,this.r*2);
     pop();
   }
+  
   atirar() { 
     var novoAngulo = canhao.angulo*PI/180-0.5;
     var velocidade = p5.Vector.fromAngle(novoAngulo);
@@ -27,9 +36,12 @@ class Bala {
   }
 
   remover(indice){
-    Matter.Body.setVelocity(balas[indice].body, {x:0,y:0});
+    this.animacao = animacaoRespingo;
+    this.velocidade = 0.05;
+    this.r = 50;
+    Matter.Body.setVelocity(this.body, {x:0,y:0});
     setTimeout(() => {
-      Matter.World.remove(world, balas[indice].body);
+      Matter.World.remove(world, this.body);
       delete balas[indice];
   }, 1000);
   }
