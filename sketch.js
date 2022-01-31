@@ -49,8 +49,8 @@ function draw() {
   pop();
 
   for (var i = 0; i < balls.length; i++) {
-    showCannonBalls(balls[i]);
-    collisionWithBoat(i);//novo
+    showCannonBalls(balls[i],i);
+    collisionWithBoat(i);
   }
 
   cannon.display();
@@ -68,9 +68,12 @@ function keyReleased(){
     balls[balls.length - 1].shoot();
   }
 }
-function showCannonBalls(ball){
+function showCannonBalls(ball, index){
   if(ball){
       ball.display();
+    if (ball.body.position.x >= width || ball.body.position.y >= height - 50) {
+        ball.remove(index);
+    }
   }
 }
 function showBoats(){
