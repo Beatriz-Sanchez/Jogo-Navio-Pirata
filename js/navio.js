@@ -29,10 +29,6 @@ class Navio{
   }
 
   remover(indice){
-    this.animacao = animacaoNavioQuebrado;
-    this.velocidade = 0.05;
-    this.largura = 300;
-    this.altura = 300;
     setTimeout(() => {
       Matter.World.remove(world, this.body);
       delete navios[indice];
