@@ -9,6 +9,7 @@ class Bala {
     this.imagem = loadImage("./assets/cannonball.png");
     this.velocidade = 0.05;
     this.animacao = [this.imagem];
+    this.afundada = false;
   }
 
   animar() {
@@ -36,6 +37,7 @@ class Bala {
   }
 
   remover(indice){
+    this.afundada = true;
     this.animacao = animacaoRespingo;
     this.velocidade = 0.05;
     this.r = 50;
