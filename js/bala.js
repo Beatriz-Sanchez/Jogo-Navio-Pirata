@@ -9,6 +9,7 @@ class Bala {
     this.imagem = loadImage("./assets/cannonball.png");
     this.velocidade = 0.05;
     this.animacao = [this.imagem];
+    this.afundada = false;
   }
 
   animar() {
@@ -25,8 +26,8 @@ class Bala {
   }
   
   atirar() { 
-    var novoAngulo = canhao.angulo*PI/180-0.5;
-    var velocidade = p5.Vector.fromAngle(novoAngulo);
+    var Angulo = canhao.angulo*PI/180-0.5;
+    var velocidade = p5.Vector.fromAngle(Angulo);
     velocidade.mult(0.4);
     Matter.Body.setStatic(this.body,false);
     Matter.Body.setVelocity(this.body,{
@@ -36,6 +37,7 @@ class Bala {
   }
 
   remover(indice){
+    this.afundada = true;
     this.animacao = animacaoRespingo;
     this.velocidade = 0.05;
     this.r = 50;

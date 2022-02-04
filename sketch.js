@@ -19,6 +19,8 @@ var animacaoNavioQuebrado = [];
 var dadosRespingo, spritesheetRespingo;
 var animacaoRespingo = [];
 
+var jogoAcabou = false;
+
 function preload() {
   fundoImg = loadImage("./assets/background.gif");
   torreImg = loadImage("./assets/tower.png");
@@ -115,8 +117,14 @@ function mostrarBala(bala, indice){
   if(bala){
     bala.display();
     bala.animar();
-    if (bala.body.position.x >= width || bala.body.position.y >= height - 50) {
+  
+    if (bala.body.position.y >= height - 50 && !bala.afundada) {
       bala.remover(indice);
+    }
+    
+    if (bala.body.position.x >= width){
+      Matter.World.remove(world, balas[indice].body);
+      delete balas[indice];
     }
   }
 }
@@ -138,6 +146,13 @@ function mostrarNavios(){
         Matter.Body.setVelocity(navios[i].body, {x: -0.9,y: 0});
         navios[i].display();
         navios[i].animar();
+
+        var collision = Matter.SAT.collides(torre, navios[i].body);
+        if (collision.collided && !navios[i].quebrado) {
+
+          jogoAcabou = true;
+          final();
+        }
       }
     }
   } else {
@@ -151,10 +166,31 @@ function colisaoComNavios(indice) {
       var colisao = Matter.SAT.collides(balas[indice].body, navios[i].body);
 
       if (colisao.collided) {
-        navios[i].remover(i);
+        if(!navios[i].quebrado && !balas[indice].afundada){
+          navios[i].remover(i);
+          i--;
+        }
         Matter.World.remove(world, balas[indice].body);
         delete balas[indice];
       }
     }
   }
+}
+
+function final() {
+  swal(
+    {
+      title: 'Fim de Jogo!!!',
+      text: "Obrigada por jogar!!",
+      imageUrl:
+        "https://raw.githubusercontent.com/whitehatjr/PiratesInvasion/main/assets/boat.png",
+      imageSize: "150x150",
+      confirmButtonText: "Jogar Novamente"
+    },
+    function(confirmado) {
+      if (confirmado) {
+        location.reload();
+      }
+    }
+  );
 }
