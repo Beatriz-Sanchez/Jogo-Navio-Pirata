@@ -169,7 +169,7 @@ function mostrarNavios(){
 
         //novo
         var collision = Matter.SAT.collides(torre, navios[i].body);
-        if (collision.collided && !barcos[i].quebrado) {
+        if (collision.collided && !navios[i].quebrado) {
 
           if(!rindo && !risadaPirata.isPlaying()){
             risadaPirata.play();
