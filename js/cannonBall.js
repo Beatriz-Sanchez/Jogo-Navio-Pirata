@@ -9,6 +9,7 @@ class CannonBall {
     this.image = loadImage("./assets/cannonball.png");
     this.speed = 0.05;
     this.animation = [this.image];
+    this.isSink = false;
   }
   animate() {
     this.speed += 0.05;
@@ -33,6 +34,7 @@ class CannonBall {
   }
 
   remove(index){
+    this.isSink=true;
     this.animation = waterSplashAnimation;
     this.speed = 0.05;
     this.r = 50;
