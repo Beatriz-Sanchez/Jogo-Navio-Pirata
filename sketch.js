@@ -107,8 +107,12 @@ function showCannonBalls(ball,index){
   if(ball){
     ball.display();
     ball.animate();
-    if (ball.body.position.x >= width || ball.body.position.y >= height - 50) {
+    if (ball.body.position.y >= height - 60) {
       ball.remove(index);
+    }
+    if (ball.body.position.x >= width){
+      Matter.World.remove(world, balls[index].body);
+      delete balls[index];
     }
   }
 }
