@@ -9,6 +9,7 @@ class Boat{
     this.image = loadImage("./assets/boat/boat1.png");
     this.animation = boatAnimation;
     this.speed = 0.05;
+    this.isBroken = false;
   }
 
   animate() {
@@ -29,6 +30,7 @@ class Boat{
   }
 
   remove(index){
+    this.isBroken = true;
     this.animation = brokenBoatAnimation;
     this.speed = 0.05;
     this.width = 300;
