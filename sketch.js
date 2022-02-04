@@ -154,7 +154,10 @@ function collisionWithBoat(index) {
       var collision = Matter.SAT.collides(balls[index].body, boats[i].body);
 
       if (collision.collided) {
-        boats[i].remove(i);
+         if(!boats[i].isBroken && !balls[index].isSink){
+          boats[i].remove(i);
+          i--;
+        }
         Matter.World.remove(world, balls[index].body);
         delete balls[index];
       }
