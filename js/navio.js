@@ -9,7 +9,6 @@ class Navio{
     this.imagem = loadImage("./assets/boat/boat1.png");
     this.animacao = animacaoNavio;
     this.velocidade = 0.05;
-    this.quebrado = false;
   }
 
   animar() {
@@ -30,7 +29,6 @@ class Navio{
   }
 
   remover(indice){
-    this.quebrado = true;
     this.animacao = animacaoNavioQuebrado;
     this.velocidade = 0.05;
     this.largura = 300;
