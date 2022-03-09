@@ -148,7 +148,7 @@ function mostrarNavios(){
         navios[i].animar();
 
         var collision = Matter.SAT.collides(torre, navios[i].body);
-        if (collision.collided && !barcos[i].quebrado) {
+        if (collision.collided && !navios[i].quebrado) {
 
           jogoAcabou = true;
           final();
